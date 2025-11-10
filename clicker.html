@@ -1,0 +1,446 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Simple Clicker Game</title>
+<style>
+  :root{
+    --bg:#0f1724;
+    --card:#0b1220;
+    --accent:#7dd3fc;
+    --muted:#94a3b8;
+    --glass: rgba(255,255,255,0.03);
+  }
+  html,body{height:100%;margin:0;font-family:Inter,system-ui,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+  body{
+    background: linear-gradient(180deg,#071029 0%, #07111a 100%);
+    color:#e6f0ff;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:24px;
+  }
+
+  .game {
+    width:100%;
+    max-width:920px;
+    display:grid;
+    grid-template-columns: 1fr 360px;
+    gap:20px;
+    align-items:start;
+  }
+
+  .panel {
+    background: linear-gradient(180deg,var(--card), rgba(10,16,24,0.9));
+    border-radius:12px;
+    padding:18px;
+    box-shadow: 0 6px 24px rgba(2,6,12,0.6);
+    border:1px solid rgba(255,255,255,0.03);
+  }
+
+  /* Left: main click area */
+  .main {
+    display:flex;
+    flex-direction:column;
+    gap:12px;
+  }
+
+  .score {
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:12px;
+  }
+
+  .score .big {
+    font-size:34px;
+    font-weight:700;
+    letter-spacing:0.4px;
+  }
+  .score .small {
+    color:var(--muted);
+    font-size:13px;
+  }
+
+  .click-area {
+    display:flex;
+    gap:18px;
+    align-items:center;
+    justify-content:center;
+    padding:28px;
+  }
+
+  .cookie {
+    background:linear-gradient(180deg,#1e293b,#0b1220);
+    width:220px;
+    height:220px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    box-shadow: 0 12px 40px rgba(2,6,12,0.7), inset 0 -8px 20px rgba(255,255,255,0.02);
+    cursor:pointer;
+    transition: transform .08s ease;
+    user-select:none;
+  }
+  .cookie:active{ transform: scale(.98); }
+
+  .cookie .label {
+    text-align:center;
+  }
+  .cookie .label h2{margin:0;font-size:28px;}
+  .cookie .label p{margin:0;font-size:14px;color:var(--muted);}
+
+  .controls {
+    display:flex;
+    gap:8px;
+    align-items:center;
+  }
+
+  .btn {
+    background:var(--glass);
+    padding:10px 14px;
+    border-radius:10px;
+    border:1px solid rgba(255,255,255,0.03);
+    color:var(--accent);
+    font-weight:600;
+    cursor:pointer;
+    transition: transform .08s ease, opacity .12s;
+  }
+  .btn:active{ transform: translateY(1px); }
+  .btn.secondary { color:var(--muted); background:transparent; }
+  .btn:disabled{ opacity:0.45; cursor:not-allowed; transform:none; }
+
+  /* Right: shop */
+  .shop .title { font-weight:700; font-size:18px; margin-bottom:8px; }
+  .shop-list { display:flex; flex-direction:column; gap:12px; margin-top:6px; }
+  .shop-item{
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border-radius:10px;
+    padding:12px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:12px;
+  }
+  .item-left { display:flex; gap:12px; align-items:center; }
+  .item-icon {
+    width:56px;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;
+    background:rgba(255,255,255,0.02); font-weight:700;
+  }
+  .item-info { min-width:0; }
+  .item-info h4 { margin:0;font-size:15px; }
+  .item-info p { margin:0;color:var(--muted);font-size:13px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+  .item-right { display:flex; flex-direction:column; align-items:flex-end; gap:8px; }
+  .price { font-weight:700; color:var(--accent); }
+
+  footer.meta { margin-top:12px; color:var(--muted); font-size:13px; }
+
+  /* responsiveness */
+  @media (max-width:880px){
+    .game { grid-template-columns: 1fr; }
+    .cookie { width:180px;height:180px; }
+  }
+</style>
+</head>
+<body>
+  <div class="game" role="application" aria-label="Simple clicker game">
+    <div class="panel main" id="mainPanel">
+      <div class="score" aria-hidden="false">
+        <div>
+          <div class="big" id="scoreDisplay">0</div>
+          <div class="small">Cookies</div>
+        </div>
+        <div style="text-align:right">
+          <div class="small">CPC: <span id="cpcDisplay">1</span></div>
+          <div class="small">CPS: <span id="cpsDisplay">0</span></div>
+        </div>
+      </div>
+
+      <div class="click-area">
+        <div class="cookie" id="cookieBtn" role="button" tabindex="0" aria-pressed="false">
+          <div class="label">
+            <h2>Click!</h2>
+            <p id="cookieHint">Click to earn cookies</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="controls">
+        <button class="btn" id="saveBtn" title="Save">Save</button>
+        <button class="btn secondary" id="resetBtn" title="Reset progress">Reset</button>
+        <div style="flex:1"></div>
+        <div class="small" style="color:var(--muted)">Tip: press <strong>Space</strong> to click</div>
+      </div>
+
+      <div class="panel" style="margin-top:12px;">
+        <div class="title">History Log</div>
+        <div id="log" style="max-height:110px;overflow:auto;color:var(--muted);font-size:13px;padding-top:6px;"></div>
+      </div>
+
+    </div>
+
+    <aside class="panel shop" id="shopPanel">
+      <div class="title">Shop</div>
+      <div class="shop-list">
+
+        <div class="shop-item" id="upgradeClickItem">
+          <div class="item-left">
+            <div class="item-icon">+C</div>
+            <div class="item-info">
+              <h4>Upgrade Click Power</h4>
+              <p>Increase Cookies per Click (CPC) by <span id="upgradeClickAmount">1</span>.</p>
+            </div>
+          </div>
+          <div class="item-right">
+            <div class="price" id="upgradeClickPrice">10</div>
+            <button class="btn" id="buyUpgradeClick">Buy</button>
+            <div class="small" id="upgradeClickLevel">Level: 0</div>
+          </div>
+        </div>
+
+        <div class="shop-item" id="autoClickItem">
+          <div class="item-left">
+            <div class="item-icon">AC</div>
+            <div class="item-info">
+              <h4>Auto-Clicker</h4>
+              <p>Gives <span id="autoClickAmount">1</span> cookie per second per unit.</p>
+            </div>
+          </div>
+          <div class="item-right">
+            <div class="price" id="autoClickPrice">50</div>
+            <button class="btn" id="buyAutoClick">Buy</button>
+            <div class="small" id="autoClickCount">Owned: 0</div>
+          </div>
+        </div>
+
+      </div>
+
+      <div class="meta" style="margin-top:14px;">
+        <div>Progress auto-saves every 10s. Saved in your browser's localStorage.</div>
+      </div>
+    </aside>
+  </div>
+
+<script>
+/* Simple Clicker Game Script
+   - Save keys: 'clicker.save'
+   - Costs scale using a multiplier.
+*/
+
+(() => {
+  // ----- Game state -----
+  const defaultState = {
+    score: 0,
+    clicksPerClick: 1,      // CPC
+    clicksPurchased: 0,     // number of click upgrades
+    autoClickers: 0,        // number of auto-clickers owned
+    lastSaved: null
+  };
+
+  const SETTINGS = {
+    saveKey: 'simple.clicker.v1',
+    autosaveIntervalMs: 10000,
+    autoTickIntervalMs: 1000,
+    upgradeBasePrice: 10,
+    upgradePriceMultiplier: 1.6,
+    upgradeClickPowerIncrease: 1,
+    autoBasePrice: 50,
+    autoPriceMultiplier: 1.65,
+    autoCookiePerSec: 1
+  };
+
+  let state = {...defaultState};
+
+  // ----- UI elements -----
+  const el = {
+    scoreDisplay: document.getElementById('scoreDisplay'),
+    cpcDisplay: document.getElementById('cpcDisplay'),
+    cpsDisplay: document.getElementById('cpsDisplay'),
+    cookieBtn: document.getElementById('cookieBtn'),
+    cookieHint: document.getElementById('cookieHint'),
+    saveBtn: document.getElementById('saveBtn'),
+    resetBtn: document.getElementById('resetBtn'),
+    log: document.getElementById('log'),
+
+    // Shop
+    upgradeClickPrice: document.getElementById('upgradeClickPrice'),
+    upgradeClickAmount: document.getElementById('upgradeClickAmount'),
+    upgradeClickLevel: document.getElementById('upgradeClickLevel'),
+    buyUpgradeClick: document.getElementById('buyUpgradeClick'),
+
+    autoClickPrice: document.getElementById('autoClickPrice'),
+    autoClickAmount: document.getElementById('autoClickAmount'),
+    autoClickCount: document.getElementById('autoClickCount'),
+    buyAutoClick: document.getElementById('buyAutoClick')
+  };
+
+  // ----- Helpers -----
+  function formatNumber(n) {
+    if (n >= 1e12) return (n/1e12).toFixed(2)+'T';
+    if (n >= 1e9) return (n/1e9).toFixed(2)+'B';
+    if (n >= 1e6) return (n/1e6).toFixed(2)+'M';
+    if (n >= 1000) return (n/1000).toFixed(2)+'k';
+    return Math.floor(n).toString();
+  }
+
+  function calcUpgradePrice(level) {
+    return Math.ceil(SETTINGS.upgradeBasePrice * Math.pow(SETTINGS.upgradePriceMultiplier, level));
+  }
+  function calcAutoPrice(count) {
+    return Math.ceil(SETTINGS.autoBasePrice * Math.pow(SETTINGS.autoPriceMultiplier, count));
+  }
+
+  function getCPS() {
+    return state.autoClickers * SETTINGS.autoCookiePerSec;
+  }
+
+  function logEvent(txt) {
+    const time = new Date().toLocaleTimeString();
+    const entry = document.createElement('div');
+    entry.textContent = `[${time}] ${txt}`;
+    el.log.prepend(entry);
+  }
+
+  // ----- Game actions -----
+  function clickCookie(n=1) {
+    state.score += n;
+    updateUI();
+  }
+
+  function buyUpgradeClick() {
+    const price = calcUpgradePrice(state.clicksPurchased);
+    if (state.score < price) return;
+    state.score -= price;
+    state.clicksPurchased += 1;
+    state.clicksPerClick += SETTINGS.upgradeClickPowerIncrease;
+    logEvent(`Bought Click Upgrade #${state.clicksPurchased} (+${SETTINGS.upgradeClickPowerIncrease} CPC).`);
+    updateUI();
+  }
+
+  function buyAutoClicker() {
+    const price = calcAutoPrice(state.autoClickers);
+    if (state.score < price) return;
+    state.score -= price;
+    state.autoClickers += 1;
+    logEvent(`Bought Auto-Clicker #${state.autoClickers}.`);
+    updateUI();
+  }
+
+  function tickAutoClicks() {
+    const gained = getCPS();
+    if (gained > 0) {
+      state.score += gained;
+      updateUI(false); // no heavy UI effects
+    }
+  }
+
+  // ----- Persistence -----
+  function saveState() {
+    try {
+      const payload = {...state, lastSaved: new Date().toISOString()};
+      localStorage.setItem(SETTINGS.saveKey, JSON.stringify(payload));
+      state.lastSaved = payload.lastSaved;
+      logEvent('Game saved.');
+    } catch (e) {
+      console.error('Save failed', e);
+    }
+  }
+  function loadState() {
+    try {
+      const raw = localStorage.getItem(SETTINGS.saveKey);
+      if (!raw) return;
+      const parsed = JSON.parse(raw);
+      // basic validation
+      if (typeof parsed.score === 'number') {
+        state = {...defaultState, ...parsed};
+        logEvent('Save loaded.');
+      }
+    } catch (e) {
+      console.error('Load failed', e);
+    }
+  }
+  function hardReset() {
+    if (!confirm('Reset all progress? This cannot be undone.')) return;
+    state = {...defaultState};
+    localStorage.removeItem(SETTINGS.saveKey);
+    updateUI();
+    logEvent('Progress reset.');
+  }
+
+  // ----- UI update -----
+  function updateUI(animate=true) {
+    el.scoreDisplay.textContent = formatNumber(state.score);
+    el.cpcDisplay.textContent = formatNumber(state.clicksPerClick);
+    el.cpsDisplay.textContent = formatNumber(getCPS());
+
+    // Upgrade click shop
+    const upPrice = calcUpgradePrice(state.clicksPurchased);
+    el.upgradeClickPrice.textContent = formatNumber(upPrice);
+    el.upgradeClickAmount.textContent = SETTINGS.upgradeClickPowerIncrease;
+    el.upgradeClickLevel.textContent = 'Level: ' + state.clicksPurchased;
+    el.buyUpgradeClick.disabled = state.score < upPrice;
+
+    // Auto clicker
+    const autoPrice = calcAutoPrice(state.autoClickers);
+    el.autoClickPrice.textContent = formatNumber(autoPrice);
+    el.autoClickAmount.textContent = SETTINGS.autoCookiePerSec;
+    el.autoClickCount.textContent = 'Owned: ' + state.autoClickers;
+    el.buyAutoClick.disabled = state.score < autoPrice;
+
+    // hint on cookie button
+    el.cookieHint.textContent = `+${state.clicksPerClick} cookies per click`;
+
+    // visual pulse (small)
+    if (animate) {
+      el.cookieBtn.animate([{transform:'scale(1)'},{transform:'scale(1.02)'},{transform:'scale(1)'}],{duration:220, easing:'ease-out'});
+    }
+  }
+
+  // ----- Event listeners -----
+  el.cookieBtn.addEventListener('click', () => {
+    clickCookie(state.clicksPerClick);
+  });
+  // allow space and enter to click
+  window.addEventListener('keydown', (e) => {
+    if (e.code === 'Space' || e.code === 'Enter') {
+      // avoid scrolling when Space
+      if (e.code === 'Space') e.preventDefault();
+      clickCookie(state.clicksPerClick);
+    }
+  });
+
+  el.buyUpgradeClick.addEventListener('click', buyUpgradeClick);
+  el.buyAutoClick.addEventListener('click', buyAutoClick);
+  el.saveBtn.addEventListener('click', saveState);
+  el.resetBtn.addEventListener('click', hardReset);
+
+  // ----- timers -----
+  // autos tick every SETTINGS.autoTickIntervalMs
+  setInterval(tickAutoClicks, SETTINGS.autoTickIntervalMs);
+
+  // autosave
+  setInterval(saveState, SETTINGS.autosaveIntervalMs);
+
+  // load and init
+  loadState();
+  updateUI(false);
+
+  // small UX: save on unload
+  window.addEventListener('beforeunload', saveState);
+
+  // expose for debugging (optional)
+  window.simpleClicker = {
+    getState: () => JSON.parse(JSON.stringify(state)),
+    save: saveState,
+    reset: hardReset
+  };
+
+  // initial log message
+  logEvent('Welcome! Click the big button to earn cookies.');
+
+})();
+</script>
+</body>
+</html>

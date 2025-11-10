@@ -1,0 +1,310 @@
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+
+  background-attachment: fixed;
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+    background: linear-gradient(90deg,rgba(214, 214, 214, 1) 0%, rgba(42, 123, 155, 1) 51%, rgba(0, 0, 0, 1) 100%);
+}
+
+@media screen and (min-width: 600px) {
+  #change {
+    background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(2px) ;
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-right: 1px solid rgba(255,255,255,0.8);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+  color: #fff;
+font-family: 'BBH Sans Bogle', sans-serif;
+    text-align: center;
+    width: 40%;
+    border-radius: 80px;
+    position: absolute;
+    z-index: 1;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 6rem;
+    padding: 20px;
+    font-size: 3em;
+    white-space: nowrap; 
+  }
+}
+@media screen and (max-width: 600px) {
+  #change {
+    background: rgba(0,0,0,0.15);
+  backdrop-filter: blur(2px) ;
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-right: 1px solid rgba(255,255,255,0.8);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+  color: #fff;
+font-family: 'BBH Sans Bogle', sans-serif;
+    text-align: center;
+    width: 60%;
+    border-radius: 80px;
+    position: absolute;
+    z-index: 1;
+    top: 35%;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 6rem;
+    padding: 20px;
+    font-size: 1.25em;
+    white-space: nowrap; 
+    
+}
+    
+}
+
+
+header {
+    position: relative;
+    z-index: 10;
+}
+
+.changing-text {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    margin-left: 0.5rem;
+    min-width: 2ch; 
+    min-height: 1.5em;
+    overflow: visible;
+    text-align: center;
+}
+
+.changing-text::before {
+    content: " ISAAC";
+    display: inline-block;
+
+    animation: changeText 12s;
+
+    animation-delay: 2s;
+    animation-timing-function: ease-in-out;
+       
+ 
+}
+#text-container{
+    
+        animation: changeFock 12s;
+        animation-delay: 2s;
+        animation-timing-function: ease-in-out;
+
+}
+
+@keyframes changeText {
+    0%    { content: " A CREATOR"; }
+    15% { content: " A CODER"; }
+    27.75% { content: " A GAMER"; }
+    38.59%{ content: " A STORYTELLER"; }
+    47.8%{ content: " A THINKER"; }
+   55.63%{ content: " A PROBLEM-SOLVER"; }
+    62.29%{ content: " A PERFECTIONIST"; }
+    67.94%{ content: " A TEAM PLAYER"; }
+    72.75%{ content: " A VISIONARY"; }
+    76.84%{ content: " A DOER"; }
+    80.31%{ content: " A LEARNER"; }
+    83.27%{ content: " A DESIGNER"; }
+    85.78%{ content: " AN ANALYST"; }
+   87.91%{ content: " A WORLD DESTRYOYER"; }
+    89.72%{ content: " A STRATEGIST"; }
+    91.26%{ content: " A BUILDER"; }
+    92.57%{ content: " A FIREBIRD"; }
+    93.69%{ content: " AN STUDENT"; }
+   94.64%{ content: " A TROUBLESHOOTER"; }
+    95.44%{ content: " A COMMUNICATOR"; }
+   96.13%{ content: " A HUMORIST"; }
+    96.71%{ content: " A TYPIST"; }
+    97.2%{ content: " AN ADVENTURER"; }
+    97.62%{ content: " A GAME DESIGNER"; }
+    97.98%{ content: " A LEADER"; }
+    98.28%{ content: " A TARTAN"; }
+    98.54%{ content: " A COLLABORATOR"; }
+    98.75%{ content: " A GRAPHIC-ARTIST"; }
+    98.94%{ content: " THE GOAT"; }
+    100%  { content: " ISAAC"; }
+}
+@keyframes changeFock{
+    0%    { font-family: 'Comic Sans MS', 'Comic Sans', cursive; transform: scale(1.3); }
+    15%   { font-family: 'Courier New', Courier, monospace; transform: scale(1); }
+    27.75%{ font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif; transform: scale(1.3); }
+    38.59%{ font-family: Georgia, 'Times New Roman', serif; transform: scale(1); }
+    47.8% { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; transform: scale(1.3); }
+    55.63%{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transform: scale(1); }
+    62.29%{ font-family: 'Times New Roman', Times, serif; transform: scale(1.3); }
+    67.94%{ font-family: 'Trebuchet MS', 'Helvetica Neue', Helvetica, Arial, sans-serif; transform: scale(1); }
+    72.75%{ font-family: 'Brush Script MT', 'Lucida Handwriting', cursive; transform: scale(1.3); }
+    76.84%{ font-family: 'Verdana', Geneva, Tahoma, sans-serif; transform: scale(1); }
+    80.31%{ font-family: 'Gill Sans', 'Franklin Gothic Medium', 'Arial Narrow', sans-serif; transform: scale(1.3); }
+    83.27%{ font-family: 'Lucida Console', Monaco, monospace; transform: scale(1); }
+    85.78%{ font-family: 'Garamond', 'Baskerville', serif; transform: scale(1.3); }
+    87.91%{ font-family: 'Brush Script MT', 'Zapfino', cursive; transform: scale(1); }
+    89.72%{ font-family: 'Franklin Gothic Medium', 'Arial Narrow', sans-serif; transform: scale(1.3); }
+    91.26%{ font-family: 'Cambria', 'Georgia', serif; transform: scale(1); }
+    92.57%{ font-family: 'Consolas', 'Liberation Mono', monospace; transform: scale(1.3); }
+    93.69%{ font-family: 'Montserrat', 'Helvetica Neue', Arial, sans-serif; transform: scale(1); }
+    94.64%{ font-family: 'Courier New', Courier, monospace; transform: scale(1.3); }
+    95.44%{ font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; transform: scale(1); }
+    96.13%{ font-family: 'Comic Sans MS', 'Comic Sans', cursive; transform: scale(1.3); }
+    96.71%{ font-family: 'Verdana', Geneva, Tahoma, sans-serif; transform: scale(1); }
+    97.2% { font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, serif; transform: scale(1.3); }
+    97.62%{ font-family: 'Georgia', 'Times New Roman', serif; transform: scale(1); }
+    97.98%{ font-family: 'Arial Black', 'Arial Bold', Gadget, sans-serif; transform: scale(1.3); }
+    98.28%{ font-family: 'Baskerville', 'Garamond', serif; transform: scale(1); }
+    98.54%{ font-family: 'Trebuchet MS', 'Franklin Gothic Medium', sans-serif; transform: scale(1.3); }
+    98.75%{ font-family: 'Impact', Haettenschweiler, 'Arial Narrow Bold', sans-serif; transform: scale(1); }
+    98.94%{ font-family: 'Lucida Grande', 'Helvetica Neue', Helvetica, Arial, sans-serif; transform: scale(1.3); }
+    100%  { font-family: 'BBH Sans Bogle', sans-serif; transform: scale(1); }
+}
+/* Default hidden state */
+.below-fold .text-box,
+.below-fold2 .text-box {
+  opacity: 0;
+  transform: translateY(60px);
+  transition: opacity 4s ease-out, transform 0.8s ease-out;
+  will-change: opacity, transform;
+}
+
+/* When visible */
+.below-fold .text-box.visible,
+.below-fold2 .text-box.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Layout styles */
+.below-fold, .below-fold2 {
+  display: flex;
+  justify-content: center;
+  padding: 6rem 2rem;
+}
+
+.below-fold {
+  margin-top: 100vh;
+}
+
+.below-fold2 {
+  margin-top: 10vh;
+}
+
+.below-fold .section,
+.below-fold2 .section {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  max-width: 1300px;
+}
+
+.below-fold .text-box,
+.below-fold2 .text-box {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 2rem;
+  background: rgba(0,0,0,0.05);
+  backdrop-filter: blur(2px);
+
+  border-radius: 60px;
+  box-shadow: 0 8px 32px rgba(31,38,135,0.2), inset 0 4px 20px rgba(255,255,255,0.3);
+  width: 100%;
+  min-height: 500px;
+}
+
+.below-fold .image-box,
+.below-fold2 .image-box {
+  flex: 0 1 45%;
+  display: flex;
+  justify-content: center;
+}
+
+.below-fold .image-box img,
+.below-fold2 .image-box img {
+  width: 85%;
+  height: auto;
+  border-radius: 60px;
+  box-shadow: 0 8px 24px rgba(0,0,0,0.4);
+}
+
+.below-fold .text-content,
+.below-fold2 .text-content {
+  flex: 0 1 45%;
+  color: #dcdcdc;
+}
+
+.below-fold .text-content h2,
+.below-fold2 .text-content h2 {
+  font-size: 2.5rem;
+  font-weight: 900;
+  color: #fff;
+  margin-bottom: 1.5rem;
+  text-transform: uppercase;
+  line-height: 1.2;
+}
+
+.below-fold .text-content p,
+.below-fold2 .text-content p {
+  font-size: 1.1rem;
+  line-height: 1.7;
+  color: #d0d0d0;
+}
+.image-info {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.6);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 10px;
+  border-radius: 60px;
+}
+
+/* Hover effect */
+.image-box:hover .image-info {
+  opacity: 1;
+}
+
+.image-box:hover .about-pic {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 900px) {
+  .below-fold .text-box,
+  .below-fold2 .text-box {
+    flex-direction: column;
+    text-align: center;
+    padding: 2rem;
+    border-radius: 2rem;
+  }
+
+  .below-fold .image-box img,
+  .below-fold2 .image-box img {
+    width: 70%;
+  }
+
+  .below-fold .text-content h2,
+  .below-fold2 .text-content h2 {
+    font-size: 2rem;
+  }
+}

@@ -1,0 +1,234 @@
+
+
+body{
+    background: linear-gradient(90deg,rgba(214, 214, 214, 1) 0%, rgba(42, 123, 155, 1) 51%, rgba(0, 0, 0, 1) 100%);
+}
+.table-wrapper {
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	min-height: 90vh;
+	z-index: 1;
+	overflow-x: auto;
+}
+
+ .img1 {
+    position: absolute; 
+    top: 0;             
+    left: 0;           
+    width: 100%;        
+    height: auto;       
+    z-index: 0;        
+    opacity: 0.5;       
+  
+}
+ .img2 {
+    position: absolute; 
+    top: 0;             
+    left: 0;           
+    width: 100%;        
+    height: auto;       
+    z-index: 2;        
+    opacity: 0.5;    
+  transform: translate(+1.15%, 0%);
+  
+}
+ .img3 {
+    position: absolute; 
+    top: 0;             
+    left: 0;           
+    width: 100%;        
+    height: auto;       
+    z-index: 2;        
+    opacity: 0.5;       
+ transform: translate(-2%, 0%);
+}
+
+
+@property --angle {
+    syntax: "<angle>";
+    initial-value: 0deg;
+    inherits: false;
+}
+
+.table-wrapper::after, 
+.table-wrapper::before {
+	content: "";
+	position: absolute;
+	inset: 0; 
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	width: calc(95% + 20px); 
+	max-width: calc(1400px + 20px);
+	height: 73%; 
+	background-image: conic-gradient(from var(--angle),transparent 40%,#1c59b4);
+	border-radius: 45px; 
+	z-index: 0; 
+    animation: 3s spin linear infinite;
+}
+
+@keyframes spin {
+    from { --angle: 0deg; }
+    to { --angle: 360deg; }
+}
+
+.table-wrapper::before {
+    filter: blur(1.5rem);
+}
+
+
+table.schedule {
+	position: relative;
+	z-index: 1;
+	width: 95%;
+	max-width: 1400px;
+	margin: 0 auto;
+	border-collapse: collapse;
+	font-family: 'BBH Sans Bogle', Arial, sans-serif;
+	background: #0f1724;
+	box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+	border-radius: 40px;
+	overflow: hidden;
+}
+
+table.schedule th,
+table.schedule td {
+	padding: 40px 18px;
+	border-bottom: 1px solid rgba(255,255,255,0.05);
+	font-size: 1rem;
+	text-align: left;
+}
+
+table.schedule thead tr {
+	background: linear-gradient(90deg, #0b254b, #081226);
+	color: #fff;
+}
+
+table.schedule thead th {
+	position: sticky;
+	top: 0;
+	z-index: 2;
+	font-weight: 700;
+}
+
+table.schedule th.side,
+table.schedule td.side,
+table.schedule th[scope="row"].side {
+	background: rgba(255,255,255,0.05);
+	color: #fbfdff;
+	font-weight: 700;
+	width: 120px;
+}
+
+table.schedule tbody tr:nth-child(even) td,
+table.schedule tbody tr:nth-child(even) th {
+	background: #fbfdff;
+	color: #081226;
+}
+
+table.schedule tbody tr:nth-child(odd) td,
+table.schedule tbody tr:nth-child(odd) th {
+	color: #fbfdff;
+}
+
+  #quiz {
+    max-width: 600px;
+    margin: 50px auto;
+    backdrop-filter: blur(2px) ;
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-right: 1px solid rgba(255,255,255,0.8);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+  padding:  2rem;
+  border-radius: 80px;
+  }
+
+
+  #quiz h2 {
+    text-align: center;
+    color: white;
+    margin-bottom: 30px;
+  }
+
+
+  .question {
+    margin-bottom: 25px;
+     color:white;
+  }
+
+  .question p {
+    font-weight: bold;
+    margin-bottom: 10px;
+    color:white;
+  }
+
+
+  input[type="radio"],
+  input[type="checkbox"] {
+    margin-right: 10px;
+   
+  }
+
+  input[type="text"],input[type="email"], input[type="tel"], textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+   
+  }
+  textarea {
+    height: 100px;
+    resize: none;
+  }
+
+
+  button[type="submit"] {
+    margin-top: 15px;
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #007BFF;
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 60px;
+    transition: background-color 0.3s ease;
+  }
+
+  button[type="submit"]:hover {
+    background-color: #0056b3;
+  }
+  button[type="reset"] {
+    display: block;
+    width: 100%;
+    padding: 12px;
+    background-color: #ff7878;
+    color: #ffffff;
+    font-size: 1em;
+    font-weight: bold;
+    border: none;
+    border-radius: 60px;
+    transition: background-color 0.3s ease;
+  }
+ button[type="reset"]:hover {
+    background-color: #ff3d3d;
+  }
+
+
+@media screen and (max-width: 600px) { 
+    .img1, .img2, .img3 {
+    display: none;
+  }
+    .table-wrapper { overflow-x: auto; 
+    } 
+    table.schedule { width: max-content; 
+    } 
+    table.schedule th, table.schedule td { padding: 15px 8px; font-size: 10px; 
+    } 
+    table.schedule th.side, table.schedule td.side { width: 70px; 
+    } 
+}

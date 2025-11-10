@@ -1,0 +1,104 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
+.rubik-mono-one-regular {
+  font-family: "Rubik Mono One", monospace;
+  font-weight: 400;
+  font-style: normal;
+}
+body{
+ animation: fadein 2s;
+  margin: 0;
+  overflow-x: hidden;
+overflow-x: none;
+  background-attachment: fixed;
+}
+header{
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 10vh;
+}
+
+header a{
+  position:fixed;
+     display: inline-block;
+    background: rgba(0,0,0,0.05);
+  backdrop-filter: blur(2px) ;
+  border-top: 1px solid rgba(255,255,255,0.8);
+  border-right: 1px solid rgba(255,255,255,0.8);
+  border-radius: 2rem;
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.2), inset 0 4px 20px rgba(255, 255, 255, 0.3);
+  color: #fff;
+  padding: 0.56rem 1.2rem;
+  text-decoration: none;
+  border-radius: 50px;
+  font-family: 'BBH Sans Bogle', sans-serif;
+  font-size: 45px;
+  text-align: center;
+  box-sizing: border-box;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  transition: 0.8s;
+  z-index: 10;
+}
+
+a img{
+  width: 40px;
+  height: 40px;
+}
+
+header a:hover {
+
+  background:  rgba(255,255,255,0.15);
+ 
+    border-radius: 20px;
+    transform: scale(2);
+  margin-top: 80px;
+}
+@keyframes fadein {
+  from {opacity: 0;}
+  to {opacity: 1;}
+}
+footer p{
+  font-family: "Rubik Mono One", monospace;
+  text-align: center;
+  font-size: 300%;
+}
+footer{
+  background: #242424;
+    color: #ffffff; 
+  padding: 20px; 
+  z-index: 10;
+}
+footer ol {
+  display: flex;             
+  justify-content: center;    
+  list-style: none;        
+  padding: 0;                 
+  margin: 0;                
+}
+
+footer ol li {
+  margin: 0 10px;            
+}
+footer a {
+  position: relative;
+  text-decoration: none;
+  color: inherit; 
+}
+
+footer a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0; 
+  width: 0%;
+  height: 2px; 
+  background-color: currentColor; 
+  transition: width 0.3s ease;
+}
+
+footer a:hover::after {
+  width: 100%;
+}
