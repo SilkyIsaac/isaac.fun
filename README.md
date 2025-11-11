@@ -1,2 +1,2 @@
-# isaac.fun
+# isaac-fun
 My personal website
